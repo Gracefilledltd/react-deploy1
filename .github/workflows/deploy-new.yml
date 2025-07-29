@@ -1,0 +1,79 @@
+name: Deploy React App to VM via SSH
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{-----BEGIN OPENSSH PRIVATE KEY-----
+b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAACFwAAAAdzc2gtcn
+NhAAAAAwEAAQAAAgEA6mcTri84Qaq28TVeNrb0ig3MpM8/7Z66rNLF10EMP14Q6I9Yy7x4
+9vNxsks1XnS1JaSq4wAYgUURcA8B6YFYdMhU91JFHYGaCvmyQ3NrWg/GvkkRuwjidGQdax
+AW/tZ4fkP+TviXAUcr39c1T++f/Z3a8CRbzKwaOp8IYYqXgBd+FixcN3iJOtK3ZLXHRyoh
+EPUq2WaLUz6+OeT0Oqx6nImyJIbyzBjRb1UCKUHZyxPMSEK/yp5OVe5t8XnqxjbzXU8nYE
+T8M17csu5+ON0B/nWpQk3H37P0w6sVDP8p0p8fy+DmIF2Qs4j7DlxQYQ/lvxAHsW61TspL
+c2Qlqi0p6r/n48XZz6sRq0T5ajqurPh4EJPZHfDI0LYh/3/Mxp2deOL+JrliBYldXHjrNw
+HRQy+eB5M89GBHm3VSOhHSXIOTtWamYizsdNXXDWc2skeuk+9EfNJL+anEAstkg8hyDcez
+padymc/d46amaHW5JVLyjWpmehTVc85cBVFpGh1VbcsC4yXYmjZa9hjfw7Up+svmI58T9g
+jLKXA4J/KvaixszxT3EmlnZ0Odw+pK/VR/o36/hw9p+Yzz0Emo6NpdjNs7uTlnVVr8qLxl
+DViq1Dw/YqslTFS2wWEAL/5nGX4NTFKNZ4VMoDXgXBp2TkVS3Gcg2GD8MyovpzxMrr/LkC
+UAAAdIedtEJnnbRCYAAAAHc3NoLXJzYQAAAgEA6mcTri84Qaq28TVeNrb0ig3MpM8/7Z66
+rNLF10EMP14Q6I9Yy7x49vNxsks1XnS1JaSq4wAYgUURcA8B6YFYdMhU91JFHYGaCvmyQ3
+NrWg/GvkkRuwjidGQdaxAW/tZ4fkP+TviXAUcr39c1T++f/Z3a8CRbzKwaOp8IYYqXgBd+
+FixcN3iJOtK3ZLXHRyohEPUq2WaLUz6+OeT0Oqx6nImyJIbyzBjRb1UCKUHZyxPMSEK/yp
+5OVe5t8XnqxjbzXU8nYET8M17csu5+ON0B/nWpQk3H37P0w6sVDP8p0p8fy+DmIF2Qs4j7
+DlxQYQ/lvxAHsW61TspLc2Qlqi0p6r/n48XZz6sRq0T5ajqurPh4EJPZHfDI0LYh/3/Mxp
+2deOL+JrliBYldXHjrNwHRQy+eB5M89GBHm3VSOhHSXIOTtWamYizsdNXXDWc2skeuk+9E
+fNJL+anEAstkg8hyDcezpadymc/d46amaHW5JVLyjWpmehTVc85cBVFpGh1VbcsC4yXYmj
+Za9hjfw7Up+svmI58T9gjLKXA4J/KvaixszxT3EmlnZ0Odw+pK/VR/o36/hw9p+Yzz0Emo
+6NpdjNs7uTlnVVr8qLxlDViq1Dw/YqslTFS2wWEAL/5nGX4NTFKNZ4VMoDXgXBp2TkVS3G
+cg2GD8MyovpzxMrr/LkCUAAAADAQABAAACAQCBKAC5Fn2p+TXKXLyn61F9DDN5kFTKSo7T
+kWO/wrDL7bnlWq7zu8rvT56TPkuO20HBFyWt5Kyb9gGwvCQylLm3x3bBvAwnQPUvHPyzm9
+JIEq9QxBRH+ZJFzbBEAN6a1nQYJsDmpKUX6C5trThL7l46sZMkhPQsJ5xgNqa4kFQAGXG5
+KAI78mezCM5SaLMALF+B54UPuygD22uXnOdRuR3qSRjmdZEtEnO8I5wIPaeS9Tq3ikgBjg
+7d3H2p86KAS2D3RhkNO5W3fIqg8TaNgIGLwytbRF5gjdjNQ+Raf/J8gn9TqH1E0ilcM5sa
+A5Wqlcbi6yNCCh1O57qBP2pdhXs1Nz2hOAkWNItHL3laj4/h4j9139cY+Po6jcpjHAsZHx
+ademola@react-deploy-vm:~/myapp$
+L9602DFPSNpuWRIt+C8FKSYMZ8VaNeVKf6IvmuC41pZ5UXoHuflLq5xI6Aud6GjYQgNbQS
+tdxmsEjVsfvGLM7Od0/K2oR0HMYozQvGTaalcgyRtFMCSg0fD9OU6/G328hRK2L4QSvELW
+NjSVUbFlKxl22cprX8V6sO/Da6Ep9mB8Inn5qTgl1FKLvL1yM8JgZPKPZ5RPr7VUWST3UE
+7q9CA7ACNNA8CcezI/tQAAAQBG3dPkuOtzQC8LR99orT1pxIQKjt0yG1jRy30f1ZRIr2rg
+0eqe0sTKpRSHm+dt89Ya4mjkDOnOaLOlevQyKs+LW9t31d/288w07k2U/zpSWPxJasmS/T
+q9KgA+bBX2T3R4Eggppx/R+W9Vda8FyQDy8OAy14b9qXsQVpXX0PwMVkPfxhTTcZHVtkzs
+k6c8Fyj+MYicmBTNFA3h8Y7ofeIcP1rkSl3xS/P8zCwuD2gT2qrAl62RXPsEiTVnLTDx7v
+b8+6T5EbLT6UY+jgw9GKgTkCfsTVxj0mKO/ZBBgUTK3eehyeEYoYttzSqQk8ztbG6YskU7
+cj/qG8olZRMkk5uJAAABAQD5tdWFCPx1tRDYu8SSy4CFeXphZkE1gGtJZ22s44KejXjul8
+xrkb5/xgV+CbuC1uu3Z49IkRRo2/af8eLLhPLHVUQnEXBEQZgfFW9ePqXty4B0BTiMoJs4
+1a3448SSAWMt090YlUhBcvXDhuxrUEoWNyW7AE18v4s+Y5qwzIYe3Btb1pqJjGX+HPrsJN
+ynsdq+XG4N6p/Tr4MwaOK29gFtckdJ+Vre3PEwMeMQMXlHOkAzOcFSTFxpRgWjUj1ZMgyK
+xDnLTLEj2RV52SbKVtbkPG6OjRUFiK8su188LPt889i3yPjPRM+zHRq8SP1MOUqY9PsBsO
+DlwbLv7vwCQ7SrAAABAQDwTol7H2aN2KrD6rd+Mw8rbuEtjqroY+mz9HYPLrtmL0eBPIls
+xCSCcAwT2lOVgnpv62RrjshYCZSkc7ATgqBn305x1z7vMMocHO6VR3vlZpkQSCN8WX11E7
+zpoUyh8eOWyIc6ulCkoUouMAG8xwVwaQ7rHeSRUBh4tduouqlGDOY5RnAw2w6/0AUobapU
+nLgij5OyWcOi3cgkwaswPs47+N92340hsL+J8qqi6xR+RiEZ2WlNplQGu0t6+gRjqnkd5O
+LL8KUka+JqzOCei4nZmVObcH3IqR5IavZe9ezd3VIpwOExbve8ETFU9CtgGO9z0wNmECrw
+y6M/GsuW7K5vAAAADWdpdGh1Yi1kZXBsb3kBAgMEBQ==
+-----END OPENSSH PRIVATE KEY-----  }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.20.56.17.128 }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to Server
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.ademola }}@${{ secrets.20.56.17.128 }} << 'EOF'
+            cd ~/myapp
+            git pull origin main
+            npm install
+            npm run build
+            pm2 restart all || pm2 start npm --name "myapp" -- start
+          EOF
