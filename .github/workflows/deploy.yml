@@ -1,0 +1,25 @@
+name: Deploy to Azure VM
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup SSH
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan -H <20.56.17.128> >> ~/.ssh/known_hosts 
+
+    - name: Deploy app to Azure VM
+      run: |
+        ssh -i ~/.ssh/id_rsa ademola@<20.56.17.128> "cd ~/myapp && git pull origin main && npm install && npm run build && pm2 restart myapp" 
